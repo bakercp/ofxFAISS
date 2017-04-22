@@ -4,19 +4,24 @@ An openFrameworks addon for FAISS - "efficient similarity search and clustering 
 More on the library, including tutorials and lots of great documentation [here](https://github.com/facebookresearch/faiss).
 
 ## Installation
+
+This addon repository does not include pre-compiled binary libraries, but does include the scripts to compile them yourself.
+
+From the `scripts/` directory, run `./install.sh`.
+
+## Development Notes
+
 ### OSX
 
-#### Development Environment
 FAISS requires [OpenMP](http://www.openmp.org/) support. At the time of writing, Xcode does not support [OpenMP](http://www.openmp.org/), but the latest version of LLVM does support it. The recommended way to install llvm is via [Homebrew](https://brew.sh/). After installing [Homebrew](https://brew.sh/), you should run `brew install llvm`.
-
-#### Compile the FAISS Library
-From the `scripts/` directory, run `./install_faiss_osx.sh`.
 
 #### Configure Xcode to Use LLVM
 1. In `Build Settings`, press the large `+` button and select `Add User-Defined Setting`.
 2. Enter `CC` for the key and `/usr/local/opt/llvm/bin/clang` for the value.
 3. In `Build Settings`, press the large `+` button and select `Add User-Defined Setting`.
 4. Enter `CXX` for the key and `/usr/local/opt/llvm/bin/clang++` for the value.
+
+![Animated GIF](https://media.giphy.com/media/3o7btTvEP1NAigN54Y/giphy.gif)
 
 #### Configure Makefiles to Use LLVM
 The `addons_config.mk` file already specifies the correct values for `CC` and `CXX` on OSX.
