@@ -1,6 +1,8 @@
 # ofxFAISS
 An openFrameworks addon for FAISS - "efficient similarity search and clustering of dense vectors."
 
+More on the library, including tutorials and lots of great documentation [here](https://github.com/facebookresearch/faiss).
+
 ## Installation
 ### OSX
 
@@ -17,7 +19,7 @@ From the `scripts/` directory, run `./install_faiss_osx.sh`.
 4. Enter `CXX` for the key and `/usr/local/opt/llvm/bin/clang++` for the value.
 
 #### Configure Makefiles to Use LLVM
-The `addons_config.mk` file already specifies the correct values for CC and CXX on OSX.
+The `addons_config.mk` file already specifies the correct values for `CC` and `CXX` on OSX.
 
 # Troubleshooting
 
