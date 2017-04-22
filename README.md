@@ -36,6 +36,13 @@ At the time of this writing, it doesn't seem possible because:
 
 Solution: Use Linux if you want GPU acceleration.
 
+### Linux
+
+Tested and configured for Ubuntu 16.04 (Linux Mint 18.1 to be precise).
+
+All "automatic" install scripts assume you are using a standard Ubuntu 16.04 configuration.
+
+
 # Troubleshooting
 
 ## OSX
