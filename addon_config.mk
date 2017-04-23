@@ -91,6 +91,7 @@ linux64:
 	ADDON_PKG_CONFIG_LIBRARIES+=blas lapack
 
 	# If faiss compiled with CUDA support, you made need to include these.
+	ADDON_INCLUDES += /usr/local/cuda/include
 	ADDON_LDFLAGS+=-L/usr/local/cuda/lib64 -lcuda -lcudart -lcublas -lcurand -lcusolver
 
 	# If faiss is compiled with MKL support, you may need to add an include here.
