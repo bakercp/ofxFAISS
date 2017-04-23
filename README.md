@@ -9,7 +9,13 @@ This addon repository does not include pre-compiled binary libraries, but does i
 
 From the `scripts/` directory, run `./install.sh`.
 
-## Development Notes
+## Examples
+
+1. Generate project examples using Project Generator or an IDE Plugin.
+  - _On Xcode, you will need to make a few minor modifications, see below._
+2. FAISS can run on the CPU or on the GPU. If you compiled FAISS with CUDA support (e.g. on Linux), the examples prefixed with `example_gpu_` will work.  Examples prefixed with `example_cpu_` should work on any supported system.
+
+## Developer Notes
 
 ### OSX
 
@@ -42,6 +48,9 @@ Tested and configured for Ubuntu 16.04 (Linux Mint 18.1 to be precise).
 
 All "automatic" install scripts assume you are using a standard Ubuntu 16.04 configuration.
 
+The default setup also assumes that a compatible version of CUDA is installed.  If the `scripts/./install.h` script fails due to a CUDA error, CUDA can be disabled by modifying the `scripts/forumlas/faiss.sh` script and re-running `scripts/./install.sh`.
+
+At the time of this writing, CUDA 8.0 was installed on the development machine.
 
 # Troubleshooting
 
