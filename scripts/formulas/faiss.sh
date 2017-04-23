@@ -41,7 +41,8 @@ function build() {
   make
 
   if [ "$TYPE" == "linux64" ] ; then
-    echo "BUILD GPU"
+    cd gpu
+    make
   fi
 }
 
