@@ -10,17 +10,30 @@
 
 void ofApp::setup()
 {
-    int d = 64;                            // dimension
-    int nb = 100000;                       // database size
-    int nq = 10000;                        // nb of queries
+    // The number of features in our feature vector.
+    const std::size_t numFeatures = 64;
 
-    float *xb = new float[d * nb];
-    float *xq = new float[d * nq];
+    // The number of feature vectors in our collection.
+    const std::size_t numFeatureVectors = 100000;
 
-    for(int i = 0; i < nb; i++) {
-        for(int j = 0; j < d; j++)
-            xb[d * i + j] = drand48();
-        xb[d * i] += i / 1000.;
+    // The number of queries we will make.
+    const std::size_t numQueries = 10000;
+
+    // Our feature vectors.
+    std::vector<float> featureVectors(numFeatureVectors, 0);
+
+    // Our query feature vectors.
+    std::vector<float> queries(numQueries, 0);
+
+    // Create random feature vectors in row-major order.
+    for(std::size_t i = 0; i < featureVectors.size(); ++i)
+    {
+        for(std::size_t j = 0; j < numFeatures; ++j)
+        {
+            featureVectors[d * i + j] = drand48();
+        }
+
+        featureVectors[d * i] += i / 1000.;
     }
 
     for(int i = 0; i < nq; i++) {

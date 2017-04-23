@@ -5,6 +5,9 @@
 //
 
 
+#define FAISS_USE_GPU
+
+
 #include <faiss/AutoTune.h>
 #include <faiss/AuxIndexStructures.h>
 #include <faiss/Clustering.h>
@@ -24,3 +27,17 @@
 #include <faiss/ProductQuantizer.h>
 #include <faiss/utils.h>
 #include <faiss/VectorTransform.h>
+
+
+#if defined(FAISS_USE_GPU)
+#include <faiss/gpu/GpuAutoTune.h>
+#include <faiss/gpu/GpuIndex.h>
+#include <faiss/gpu/GpuIndexFlat.h>
+#include <faiss/gpu/GpuIndexIVF.h>
+#include <faiss/gpu/GpuIndexIVFFlat.h>
+#include <faiss/gpu/GpuIndexIVFPQ.h>
+#include <faiss/gpu/GpuIndicesOptions.h>
+#include <faiss/gpu/GpuResources.h>
+#include <faiss/gpu/IndexProxy.h>
+#include <faiss/gpu/StandardGpuResources.h>
+#endif

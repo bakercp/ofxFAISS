@@ -43,6 +43,7 @@ function build() {
   if [ "$TYPE" == "linux64" ] ; then
     cd gpu
     make
+    cd -
   fi
 }
 
@@ -60,6 +61,13 @@ function copy() {
 
 	cp *.a $1/lib/$TYPE/
 	cp *.h $1/include/faiss/
+
+  if [ "$TYPE" == "linux64" ] ; then
+    mkdir -p $1/include/faiss/gpu/utils
+    cp gpu/*.a $1/lib/$TYPE/
+    cp gpu/*.h $1/include/faiss/gpu
+    cp gpu/utils/*.h $1/include/faiss/gpu/utils
+  fi
 
 }
 
