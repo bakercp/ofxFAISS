@@ -1,29 +1,19 @@
 #! /bin/bash
-#
-
-echo "IN HERE"
-
-# define the version
-VER=
 
 # tools for git use
 GIT_URL="https://github.com/facebookresearch/faiss.git"
-#GIT_TAG="v$VER"
 GIT_TAG=281683100ac7f44d3da983f1a7dc382ff75ca938
 
 FORMULA_TYPES=( "osx" "linux64")
 
-# download the source code and unpack it into LIB_NAME
 function download() {
-  echo "Download"
-  pwd
+  echo "download wd: `pwd`"
   git clone $GIT_URL
   cd faiss
   git checkout $GIT_TAG
   cd ..
 }
 
-# prepare the build environment, executed inside the lib src dir
 function prepare() {
   echo "prepare wd: `pwd`"
   cp $ADDONS_DIR/ofxFAISS/scripts/$TYPE/makefile.inc .
@@ -34,11 +24,10 @@ function prepare() {
 
 }
 
-# executed inside the lib src dir
 function build() {
   echo "build wd: `pwd`"
-  export MAKEFLAGS="-j$PARALLEL_MAKE -s"
-  make
+
+  make -j$PARALLEL_MAKE -s
 
   if [ "$TYPE" == "linux64" ] ; then
     cd gpu
@@ -47,7 +36,6 @@ function build() {
   fi
 }
 
-# executed inside the lib src dir, first arg $1 is the dest libs dir root
 function copy() {
   echo "copy wd: `pwd`"
 
@@ -71,7 +59,6 @@ function copy() {
 
 }
 
-# executed inside the lib src dir
 function clean() {
   echo "clean wd: `pwd`"
   make clean
