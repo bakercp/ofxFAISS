@@ -5,9 +5,6 @@
 //
 
 
-#define FAISS_USE_GPU
-
-
 #include <faiss/AutoTune.h>
 #include <faiss/AuxIndexStructures.h>
 #include <faiss/Clustering.h>
@@ -27,6 +24,10 @@
 #include <faiss/ProductQuantizer.h>
 #include <faiss/utils.h>
 #include <faiss/VectorTransform.h>
+
+
+// Enable to use include GPU features.
+// #define FAISS_USE_GPU
 
 
 #if defined(FAISS_USE_GPU)
