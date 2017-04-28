@@ -33,6 +33,10 @@ At the time of this writing, it doesn't seem possible because:
 
 Solution: Use Linux if you want GPU acceleration.
 
+#### BLAS library selection for CPU operations
+
+In informal tests (running `$ time faiss/tests/./demo_ivfpq_indexing `), CPU operations were _slightly_ faster using the Accelerate framework rather than using MKL.  MKL flags were tuned according to [https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor/](https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor/)  Tests were performed on a Late 2012 Macbook Pro, so newer processors may yield better results.
+
 ### Linux
 
 Tested and configured for Ubuntu 16.04 (Linux Mint 18.1 to be precise).
@@ -42,3 +46,10 @@ All "automatic" install scripts assume you are using a standard Ubuntu 16.04 con
 The default setup also assumes that a compatible version of CUDA is installed.  If the `scripts/./install.h` script fails due to a CUDA error, CUDA can be disabled by modifying the `scripts/forumlas/faiss.sh` script and re-running `scripts/./install.sh`.
 
 At the time of this writing, CUDA 8.0 was installed on the development machine.
+
+#### BLAS library selection for CPU operations
+
+In informal tests (running `$ time faiss/tests/./demo_ivfpq_indexing `), CPU operations were _significantly_ faster when using MKL rather than the standard openblas / openlapack.
+
+To tune linking and other MKL flags, see [https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor/](https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor/)
+
