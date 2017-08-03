@@ -47,4 +47,3 @@
 #endif
 
 
-namespace ofxFAISS = ofx::FAISS;
