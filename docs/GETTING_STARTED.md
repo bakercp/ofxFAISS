@@ -10,6 +10,8 @@
 
 ### OSX
 
+Did you get a message like _Warning: OpenMP is NOT activated"?
+
 FAISS requires [OpenMP](http://www.openmp.org/) support. At the time of writing, Xcode does not support [OpenMP](http://www.openmp.org/), but the latest version of LLVM does support it. The recommended way to install llvm is via [Homebrew](https://brew.sh/). After installing [Homebrew](https://brew.sh/), you should run `brew install llvm`.
 
 #### Configure Xcode to Use LLVM
