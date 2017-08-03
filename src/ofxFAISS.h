@@ -5,6 +5,9 @@
 //
 
 
+#pragma once
+
+
 #include <faiss/AutoTune.h>
 #include <faiss/AuxIndexStructures.h>
 #include <faiss/Clustering.h>
@@ -42,3 +45,6 @@
 #include <faiss/gpu/IndexProxy.h>
 #include <faiss/gpu/StandardGpuResources.h>
 #endif
+
+
+namespace ofxFAISS = ofx::FAISS;
