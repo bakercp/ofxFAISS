@@ -2,9 +2,9 @@
 
 # tools for git use
 GIT_URL="https://github.com/facebookresearch/faiss.git"
-GIT_TAG=281683100ac7f44d3da983f1a7dc382ff75ca938
+GIT_TAG=0b1f5004ecc7309a10ea0642f91b231927c1c7dc
 
-FORMULA_TYPES=( "osx" "linux64")
+FORMULA_TYPES=( "osx" "linux64" )
 
 function download() {
   echo "download wd: `pwd`"
@@ -16,10 +16,13 @@ function download() {
 
 function prepare() {
   echo "prepare wd: `pwd`"
-  cp $ADDONS_DIR/ofxFAISS/scripts/$TYPE/makefile.inc .
 
-  if [ -f $ADDONS_DIR/ofxFAISS/scripts/$TYPE/install.sh ] ; then
-    $ADDONS_DIR/ofxFAISS/scripts/$TYPE/./install.sh
+  if [ "$TYPE" == "osx" ] ; then
+    # The Accelerate.framework is fastest on macOS. MKL is close, but more difficult to link / compile.
+    # See the docs/GETTING_STARTED.md for more info.
+    cp ${ADDONS_DIR}/ofxFAISS/scripts/${TYPE}/makefile.inc.accelerate makefile.inc
+  else
+    cp ${ADDONS_DIR}/ofxFAISS/scripts/${TYPE}/makefile.inc .
   fi
 
 }
@@ -27,7 +30,7 @@ function prepare() {
 function build() {
   echo "build wd: `pwd`"
 
-  make -j$PARALLEL_MAKE -s
+  make -j$PARALLEL_MAKE
 
   if [ "$TYPE" == "linux64" ] ; then
     cd gpu
@@ -60,6 +63,6 @@ function copy() {
 }
 
 function clean() {
-  echo "clean wd: `pwd`"
-  make clean
+  cd ..
+  rm -rf faiss
 }

@@ -1,6 +1,5 @@
 _This is under development currently so, your please post questions to the [issues](https://github.com/bakercp/ofxFAISS/issues) for now._
 
-
 # ofxFAISS
 An openFrameworks addon for FAISS - "efficient similarity search and clustering of dense vectors."
 
@@ -8,18 +7,17 @@ More on the library, including tutorials and lots of great documentation [here](
 
 ## Features
 
-Really fast similarity search and clustering of dense vectors.
-
+Really fast approximate similarity search and clustering of dense vectors.
 
 ## Getting Started
 
 ### TL;DR
-- From the `scripts/` directory ...
-  - `./install.sh`
-- From the `example_cpu_Flat/` directory ...
-  - `make && make run`
+-   From the `scripts/` directory ...
+    -   `./bootstrap.sh`
+-   From the `example_cpu_Flat/` directory ...
+    -   `make && make run`
 
-For more, see [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md).
+For more, including some help with macOS, see [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md).
 
 ## Troubleshooting
 
@@ -47,16 +45,14 @@ This project uses Semantic Versioning, although strict adherence will only come 
 
 ## Licensing
 
-See `LICENSE.md`.
+See [LICENSE.md](LICENSE.md).
 
 ## Contributing
 
 Pull Requests are always welcome, so if you make any improvements please feel free to float them back upstream :)
 
-1. Fork this repository.
-2. Create your feature branch (`git checkout -b my-new-feature`).
-3. Commit your changes (`git commit -am 'Add some feature'`).
-4. Push to the branch (`git push origin my-new-feature`).
-5. Create new Pull Request.
-
-
+1.  Fork this repository.
+2.  Create your feature branch (`git checkout -b my-new-feature`).
+3.  Commit your changes (`git commit -am 'Add some feature'`).
+4.  Push to the branch (`git push origin my-new-feature`).
+5.  Create new Pull Request.
