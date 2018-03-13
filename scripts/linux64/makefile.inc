@@ -44,12 +44,13 @@ FAISSSHAREDFLAGS=-shared
 #
 # The following settings are working if MLK is installed on its default folder:
 #
-# MKLROOT=/opt/intel/compilers_and_libraries/linux/mkl/
+MKLROOT=/opt/intel/mkl
 #
-# BLASLDFLAGS=-Wl,--no-as-needed -L$(MKLROOT)/lib/intel64   -lmkl_intel_ilp64 \
-# -lmkl_core -lmkl_gnu_thread -ldl -lpthread
-#
-# BLASCFLAGS=-DFINTEGER=long
+#BLASLDFLAGS=-Xlinker -Wl,--no-as-needed -L$(MKLROOT)/lib/intel64 -lmkl_intel_ilp64 -lmkl_core -lmkl_gnu_thread -ldl -lpthread
+
+BLASLDFLAGS=-L$(MKLROOT)/lib/intel64 -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl
+
+BLASCFLAGS=-DFINTEGER=long
 #
 # you may have to set the LD_LIBRARY_PATH=$MKLROOT/lib/intel64 at runtime.
 # If at runtime you get the error:
@@ -65,14 +66,14 @@ FAISSSHAREDFLAGS=-shared
 #   https://github.com/facebookresearch/faiss/wiki/Troubleshooting#slow-brute-force-search-with-openblas
 # to fix performance problemes with OpenBLAS
 
-BLASCFLAGS=-DFINTEGER=int
+#BLASCFLAGS=-DFINTEGER=int
 
 # This is for Centos:
 # BLASLDFLAGS?=/usr/lib64/libopenblas.so.0
 
 # for Ubuntu 16:
 # sudo apt-get install libopenblas-dev python-numpy python-dev
-BLASLDFLAGS?=/usr/lib/libopenblas.so.0
+#BLASLDFLAGS?=/usr/lib/libopenblas.so.0
 
 # for Ubuntu 14:
 # sudo apt-get install libopenblas-dev liblapack3 python-numpy python-dev
@@ -137,8 +138,6 @@ NVCCFLAGS= $(CUDAFLAGS) \
    -I $(CUDAROOT)/targets/x86_64-linux/include/ \
    -Xcompiler -fPIC \
    -Xcudafe --diag_suppress=unrecognized_attribute \
-   -gencode arch=compute_35,code="compute_35" \
-   -gencode arch=compute_52,code="compute_52" \
    -gencode arch=compute_60,code="compute_60" \
    --std c++11 -lineinfo \
    -ccbin $(CXX) -DFAISS_USE_FLOAT16

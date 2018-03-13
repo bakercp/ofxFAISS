@@ -37,12 +37,14 @@ linux64:
 	ADDON_CFLAGS += -m64 -msse4 -mpopcnt
 
 	# Support for blas.
-	ADDON_PKG_CONFIG_LIBRARIES+=blas lapack
+	# ADDON_PKG_CONFIG_LIBRARIES+=blas lapack
+
+	# If faiss is compiled with MKL support, you may need to add an include here.
+	ADDON_INCLUDES += /opt/intel/mkl/include
+	ADDON_LDFLAGS += -L/opt/intel/mkl/lib/intel64 -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl
+
 
 	# If faiss compiled with CUDA support, you made need to include these.
 	ADDON_CFLAGS += -DFAISS_USE_GPU
 	ADDON_INCLUDES += /usr/local/cuda/include
 	ADDON_LDFLAGS += -L/usr/local/cuda/lib64 -lcuda -lcudart -lcublas -lcurand -lcusolver
-
-	# If faiss is compiled with MKL support, you may need to add an include here.
-	# ADDON_INCLUDES+=/opt/intel/mkl/include
