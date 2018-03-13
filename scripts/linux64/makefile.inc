@@ -48,7 +48,7 @@ MKLROOT=/opt/intel/mkl
 #
 #BLASLDFLAGS=-Xlinker -Wl,--no-as-needed -L$(MKLROOT)/lib/intel64 -lmkl_intel_ilp64 -lmkl_core -lmkl_gnu_thread -ldl -lpthread
 
-BLASLDFLAGS=-L$(MKLROOT)/lib/intel64 -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl
+BLASLDFLAGS=-L$(MKLROOT)/lib/intel64 -lmkl_intel_ilp64 -lmkl_gnu_thread -lmkl_core -lgomp -lpthread -lm -ldl
 
 BLASCFLAGS=-DFINTEGER=long
 #

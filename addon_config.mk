@@ -44,7 +44,7 @@ linux64:
 
 	# If faiss is compiled with MKL support, you may need to add an include here.
 	ADDON_INCLUDES += /opt/intel/mkl/include
-	ADDON_LDFLAGS += -L/opt/intel/mkl/lib/intel64 -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl
+	ADDON_LDFLAGS += -L/opt/intel/mkl/lib/intel64 -lmkl_intel_ilp64 -lmkl_gnu_thread -lmkl_core -lgomp -lpthread -lm -ldl
 
 
 	# If faiss compiled with CUDA support, you made need to include these.
