@@ -125,10 +125,8 @@ PYTHONCFLAGS=-I/usr/include/python2.7/ -I/usr/lib64/python2.7/site-packages/nump
 # Cuda GPU flags
 ###########################################################################
 
-
-
 # root of the cuda 8 installation
-CUDAROOT=/usr/local/cuda-8.0/
+CUDAROOT=/usr/local/cuda-8.0
 
 CUDACFLAGS=-I$(CUDAROOT)/include
 

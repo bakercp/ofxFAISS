@@ -22,6 +22,9 @@ osx:
 	# Optimization and other CFLAGS (in addition to those listed in common).
 	ADDON_CFLAGS += -m64 -msse4 -mpopcnt
 
+	# We add this because Xcode doesn't get the -fopenmp message.
+	ADDON_DEFINES += _OPENMP
+
 	# Experimental CUDA Support for OSX
 	# ADDON_INCLUDES += /usr/local/cuda/include
 	# ADDON_LDFLAGS += -L/usr/local/cuda/lib -lcudart_static -lcublas_static

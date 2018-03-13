@@ -4,7 +4,7 @@
     -   `./bootstrap.sh`
 2.  Generate project examples using Project Generator or an IDE Plugin.
     -   _On Xcode, you will need to make a few minor modifications, see below._
-3.  FAISS can run on the CPU or on the GPU. If you compiled FAISS with CUDA support (e.g. on Linux), the examples prefixed with `example_gpu_` will work.  Examples prefixed with `example_cpu_` should work on any supported system.
+3.  FAISS can run on the CPU or on the GPU. If you compiled FAISS with CUDA support (e.g. on Linux), the examples prefixed with `example_*_gpu_` will work.  Examples prefixed with `example_*_cpu_` should work on any supported system.
 
 ## Developer Notes
 
@@ -26,7 +26,7 @@ FAISS requires [OpenMP](http://www.openmp.org/) support. At the time of writing,
 
 Did you get a message like _clang: error: cannot specify -o when generating multiple output files_?
 
-In Xcode 9, we have to make a few adjustments.
+In Xcode 9, we have to make an additional adjustment:
 
 In build settings > build options > Enable Index-While-Building Functionality to No
 
@@ -62,9 +62,9 @@ In informal tests (running `$ time faiss/tests/./demo_ivfpq_indexing `), CPU ope
 
 ### Linux
 
-Tested and configured for Ubuntu 16.04 (Linux Mint 18.1 to be precise).
+Tested and configured for Ubuntu 16.04 (Linux Mint 18.3 to be precise).
 
-All "automatic" install scripts assume you are using a standard Ubuntu 16.04 configuration.
+All "automatic" install scripts assume you are using a standard Ubuntu 16.04 configuration and have an NVIDIA GTX 10** (something with compute capability 6.0 or higher).
 
 The default setup also assumes that a compatible version of CUDA is installed.  If the `scripts/./boostrap.h` script fails due to a CUDA error, CUDA can be disabled by modifying the `scripts/forumlas/faiss.sh` script and re-running `scripts/./bootstrap.sh`.
 
@@ -72,6 +72,18 @@ At the time of this writing, CUDA 8.0 was installed on the development machine.
 
 #### BLAS library selection for CPU operations
 
-In informal tests (running `$ time faiss/tests/./demo_ivfpq_indexing `), CPU operations were _significantly_ faster when using MKL rather than the standard openblas / openlapack.
+In informal tests (running `$ time faiss/tests/./demo_ivfpq_indexing `), CPU operations were _significantly_ faster (50-75% faster) when using MKL rather than the standard openblas / openlapack.
 
 To tune linking and other MKL flags, see [https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor/](https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor/)
+
+To use MKL as configured, you must add the following to access the dynamic libs.
+
+```
+LD_LIBRARY_PATH=/opt/intel/mkl/lib/intel64
+```
+
+e.g.
+
+```
+$ LD_LIBRARY_PATH=/opt/intel/mkl/lib/intel64 && make run
+```
