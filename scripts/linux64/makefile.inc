@@ -2,16 +2,18 @@
 # Copyright (c) 2015-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the CC-by-NC license found in the
+# This source code is licensed under the BSD+Patents license found in the
 # LICENSE file in the root directory of this source tree.
 
 # -*- makefile -*-
 # tested on CentOS 7, Ubuntu 16 and Ubuntu 14, see below to adjust flags to distribution.
 
 
-CC=g++
+CC=gcc
+CXX=g++
 
-CFLAGS=-fPIC -m64 -Wall -g -O3  -msse4 -mpopcnt -fopenmp -Wno-sign-compare -Dnullptr=NULL -Doverride= -fopenmp
+CFLAGS=-fPIC -m64 -Wall -g -O3 -mavx -msse4 -mpopcnt -fopenmp -Wno-sign-compare -fopenmp
+CXXFLAGS=$(CFLAGS) -std=c++11
 LDFLAGS=-g -fPIC  -fopenmp
 
 # common linux flags
@@ -49,24 +51,30 @@ FAISSSHAREDFLAGS=-shared
 #
 # BLASCFLAGS=-DFINTEGER=long
 #
-# you may have to set the LD_LIBRARY_PATH=$MKLROOT/lib/intel64 at runtime
-#
+# you may have to set the LD_LIBRARY_PATH=$MKLROOT/lib/intel64 at runtime.
+# If at runtime you get the error:
+#   Intel MKL FATAL ERROR: Cannot load libmkl_avx2.so or libmkl_def.so.
+# You may add set
+#   LD_PRELOAD=$MKLROOT/lib/intel64/libmkl_core.so:$MKLROOT/lib/intel64/libmkl_sequential.so
+# at runtime as well.
 
 #
 # 2. Openblas
 #
-# The library contains both BLAS and Lapack. About 30% slower than MKL.
+# The library contains both BLAS and Lapack. About 30% slower than MKL. Please see
+#   https://github.com/facebookresearch/faiss/wiki/Troubleshooting#slow-brute-force-search-with-openblas
+# to fix performance problemes with OpenBLAS
 
 BLASCFLAGS=-DFINTEGER=int
 
 # This is for Centos:
-#BLASLDFLAGS?=/usr/lib64/libopenblas.so.0
+BLASLDFLAGS?=/usr/lib64/libopenblas.so.0
 
-# for Ubuntu 16: 
+# for Ubuntu 16:
 # sudo apt-get install libopenblas-dev python-numpy python-dev
-BLASLDFLAGS?=/usr/lib/libopenblas.so.0
+# BLASLDFLAGS?=/usr/lib/libopenblas.so.0
 
-# for Ubuntu 14: 
+# for Ubuntu 14:
 # sudo apt-get install libopenblas-dev liblapack3 python-numpy python-dev
 # BLASLDFLAGS?=/usr/lib/libopenblas.so.0 /usr/lib/lapack/liblapack.so.3.0
 #
@@ -102,12 +110,12 @@ SWIGEXEC=swig
 #
 # python -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"
 # python -c "import numpy ; print numpy.get_include()"
-# 
-# or, for Python 3, with 
-# 
+#
+# or, for Python 3, with
+#
 # python3 -c "import distutils.sysconfig; print(distutils.sysconfig.get_python_inc())"
 # python3 -c "import numpy ; print(numpy.get_include())"
-# 
+#
 
 PYTHONCFLAGS=-I/usr/include/python2.7/ -I/usr/lib64/python2.7/site-packages/numpy/core/include/
 
@@ -117,8 +125,6 @@ PYTHONCFLAGS=-I/usr/include/python2.7/ -I/usr/lib64/python2.7/site-packages/nump
 ###########################################################################
 
 
-# a C++ compiler that supports c++11
-CC11=g++
 
 # root of the cuda 8 installation
 CUDAROOT=/usr/local/cuda-8.0/
@@ -135,10 +141,10 @@ NVCCFLAGS= $(CUDAFLAGS) \
    -gencode arch=compute_52,code="compute_52" \
    -gencode arch=compute_60,code="compute_60" \
    --std c++11 -lineinfo \
-   -ccbin $(CC11) -DFAISS_USE_FLOAT16
+   -ccbin $(CXX) -DFAISS_USE_FLOAT16
 
 # BLAS LD flags for nvcc (used to generate an executable)
-# if BLASLDFLAGS contains several flags, each one may 
+# if BLASLDFLAGS contains several flags, each one may
 # need to be prepended with -Xlinker
 BLASLDFLAGSNVCC=-Xlinker $(BLASLDFLAGS)
 
