@@ -34,7 +34,7 @@ function build() {
 
   if [ "$TYPE" == "linux64" ] ; then
     cd gpu
-    make
+    make -j$PARALLEL_MAKE
     cd -
   fi
 }
