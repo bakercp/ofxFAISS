@@ -31,18 +31,25 @@ void ofApp::setup()
     // (could be the database)
     size_t nt = 100 * 1000;
     
-    // make the index object and train it
-    faiss::IndexFlatL2 coarse_quantizer (d);
-    
+    int dev_no = 0;
+    /*
+     printf ("[%.3f s] Begin d=%d nb=%ld nt=%nt dev_no=%d\n",
+     elapsed() - t0, d, nb, nt, dev_no);
+     */
     // a reasonable number of centroids to index nb vectors
     int ncentroids = int (4 * sqrt (nb));
+    
+    faiss::gpu::StandardGpuResources resources;
+    
     
     // the coarse quantizer should not be dealloced before the index
     // 4 = nb of bytes per code (d must be a multiple of this)
     // 8 = nb of bits per sub-code (almost always 8)
-    faiss::IndexIVFPQ index (&coarse_quantizer, d,
-                             ncentroids, 4, 8);
+    faiss::gpu::GpuIndexIVFPQConfig config;
+    config.device = dev_no;
     
+    faiss::gpu::GpuIndexIVFPQ index (
+                                     &resources, d, ncentroids, 4, 8, faiss::METRIC_L2, config);
     
     { // training
         printf ("[%.3f s] Generating %ld vectors in %dD for training\n",
@@ -65,7 +72,11 @@ void ofApp::setup()
         printf ("[%.3f s] storing the pre-trained index to %s\n",
                 elapsed() - t0, outfilename);
         
-        write_index (&index, outfilename);
+        faiss::Index * cpu_index = faiss::gpu::index_gpu_to_cpu (&index);
+        
+        write_index (cpu_index, outfilename);
+        
+        delete cpu_index;
     }
     
     size_t nq;
@@ -85,8 +96,7 @@ void ofApp::setup()
         
         index.add (nb, database.data());
         
-        printf ("[%.3f s] imbalance factor: %g\n",
-                elapsed() - t0, index.imbalance_factor ());
+        printf ("[%.3f s] done\n", elapsed() - t0);
         
         // remember a few elements from the database as queries
         int i0 = 1234;
